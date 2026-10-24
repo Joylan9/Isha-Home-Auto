@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { Marquee } from './components/Marquee';
 import { Story } from './components/Story';
 import { Experience } from './components/Experience';
+import { Home3D } from './components/Home3D';
 import { Capabilities } from './components/Capabilities';
 import { Principles } from './components/Principles';
 import { Collections } from './components/Collections';
@@ -72,6 +73,7 @@ export default function App() {
         <Marquee />
         <Story />
         <Experience />
+        <Home3D />
         <Capabilities />
         <Principles />
         <Collections onEnquire={handleEnquire} />

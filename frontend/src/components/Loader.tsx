@@ -8,7 +8,7 @@ function waitForAssets(): Promise<void> {
   const hero = new Promise<void>((resolve) => {
     const img = new Image();
     img.onload = img.onerror = () => resolve();
-    img.src = unsplashUrl(photos.heroVilla, window.innerWidth > 1600 ? 2400 : 1600);
+    img.src = unsplashUrl(photos.heroFlat, window.innerWidth > 1600 ? 2400 : 1600);
   });
   const timeout = new Promise<void>((resolve) => setTimeout(resolve, 4500));
   return Promise.race([Promise.all([hero, document.fonts.ready]).then(() => undefined), timeout]);
@@ -22,18 +22,11 @@ export function Loader({ onComplete }: { onComplete: () => void }) {
       const reduced = prefersReducedMotion();
       const counter = { v: 0 };
       const num = root.current!.querySelector('.loader__num')!;
-      const strokes = gsap.utils.toArray<SVGGeometryElement>('.loader__stroke');
-
-      strokes.forEach((s) => {
-        const len = s.getTotalLength();
-        gsap.set(s, { strokeDasharray: len, strokeDashoffset: len });
-      });
-
       const intro = gsap.timeline();
       intro
-        .to(strokes, { strokeDashoffset: 0, duration: reduced ? 0.01 : 1.6, ease: 'power2.inOut', stagger: 0.18 })
-        .to('.loader__fill', { opacity: 1, duration: 0.6 }, '-=0.5')
-        .from('.loader__word span', { yPercent: 120, duration: 0.9, ease: 'expo.out', stagger: 0.06 }, 0.3)
+        .fromTo('.loader__logo', { scale: 0.82, autoAlpha: 0, filter: 'blur(16px)', rotateX: 18 }, { scale: 1, autoAlpha: 1, filter: 'blur(0px)', rotateX: 0, duration: reduced ? 0.01 : 1.4, ease: 'expo.out' })
+        .to('.loader__shine', { xPercent: 240, duration: reduced ? 0.01 : 1.3, ease: 'power2.inOut' }, 0.5)
+        .from('.loader__tag', { autoAlpha: 0, y: 12, duration: 0.8, ease: 'expo.out' }, 0.7)
         .to(counter, {
           v: 86,
           duration: reduced ? 0.01 : 1.8,
@@ -62,25 +55,10 @@ export function Loader({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div className="loader" ref={root} aria-hidden="true">
-      <div className="loader__inner">
-        <svg className="loader__mark" viewBox="0 0 100 100" fill="none">
-          <defs>
-            <linearGradient id="loaderGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#E8EDF3" />
-              <stop offset="0.55" stopColor="#C4CCD6" />
-              <stop offset="1" stopColor="#168DDF" />
-            </linearGradient>
-          </defs>
-          <path className="loader__fill" d="M31 87 V60 Q31 54 36 51 L43 47 V87 Z" />
-          <circle className="loader__fill" cx="37" cy="38" r="6.5" />
-          <path className="loader__stroke" d="M8 44 L44 16 Q48 13 52 16 L82 40 Q87 44 87 50 L87 79 Q87 87 79 87 L50 87" />
-          <circle className="loader__stroke" cx="37" cy="38" r="6.5" />
-          <path className="loader__stroke" d="M31 87 V60 Q31 54 36 51 L43 47 V87 Z" />
-        </svg>
-        <div className="loader__word">
-          {'ISHA'.split('').map((c, i) => (
-            <span key={i}>{c}</span>
-          ))}
+      <div className="loader__inner" style={{ perspective: 800 }}>
+        <div className="loader__logo">
+          <img src="/brand/isha-logo-512.webp" alt="" width={200} height={200} />
+          <span className="loader__shine" />
         </div>
         <p className="loader__tag">Intelligent Living</p>
       </div>

@@ -8,6 +8,7 @@ Website for **ISHA**, a premium home automation brand for Coastal Karnataka (Kun
 
 - **React 19 + TypeScript** on **Vite**
 - **GSAP** (ScrollTrigger, SplitText, `@gsap/react`) for scroll choreography
+- **Three.js + React Three Fiber + drei** for the interactive 3D flat (lazy-loaded)
 - **Lenis** for inertial smooth scrolling
 - 4K responsive photography (640 → 3840px `srcset`) via the Unsplash CDN
 
@@ -48,9 +49,10 @@ public/brand/   ISHA logo (original + transparent PNGs) and favicon
 
 | Colour | Hex | Meaning |
 | --- | --- | --- |
-| Midnight Navy | `#0B1B34` | Trust, engineering excellence |
-| Electric Blue | `#168DDF` | Innovation, connectivity |
-| Metallic Silver | `#C4CCD6` | Precision, modern engineering |
+| Midnight Royal | `#011756` | Depth, trust (logo background) |
+| Royal Blue | `#0F85F8` | Innovation, connectivity |
+| Logo Gold | `#E2A54E` | Premium, warmth (logo emblem) |
+| Smart Cyan | `#5DFCFD` | Smart-home signals (logo windows) |
 | Pure White | `#FFFFFF` | Simplicity, clarity |
 
 ## Accessibility

@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- ─── Brand Banner ─── -->
-<img src="frontend/public/brand/isha-logo-512.png" alt="ISHA Logo" width="120" />
+<img src="frontend/public/brand/isha-logo-512.webp" alt="ISHA Logo" width="120" />
 
 # ✦ ISHA — Intelligent Living
 
@@ -14,17 +14,18 @@ Premium home-automation brand for Coastal Karnataka, powered by [SoVir Technolog
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
 [![GSAP](https://img.shields.io/badge/GSAP-3.15-88CE02?style=for-the-badge&logo=greensock&logoColor=black)](https://gsap.com)
-[![License](https://img.shields.io/badge/License-Proprietary-0B1B34?style=for-the-badge)](#license)
+[![License](https://img.shields.io/badge/License-Proprietary-011756?style=for-the-badge)](#license)
 
 <br/>
 
 <!-- ─── Color Palette ─── -->
 <table>
 <tr>
-<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-0B1B34?style=for-the-badge" /><br/><sub><b>Midnight Navy</b><br/><code>#0B1B34</code></sub></td>
-<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-168DDF?style=for-the-badge" /><br/><sub><b>Electric Blue</b><br/><code>#168DDF</code></sub></td>
-<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-C4CCD6?style=for-the-badge" /><br/><sub><b>Metallic Silver</b><br/><code>#C4CCD6</code></sub></td>
-<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-FFFFFF?style=for-the-badge" /><br/><sub><b>Pure White</b><br/><code>#FFFFFF</code></sub></td>
+<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-011756?style=for-the-badge" /><br/><sub><b>Midnight Royal</b><br/><code>#011756</code></sub></td>
+<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-0F85F8?style=for-the-badge" /><br/><sub><b>Royal Blue</b><br/><code>#0F85F8</code></sub></td>
+<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-E2A54E?style=for-the-badge" /><br/><sub><b>Logo Gold</b><br/><code>#E2A54E</code></sub></td>
+<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-5DFCFD?style=for-the-badge" /><br/><sub><b>Smart Cyan</b><br/><code>#5DFCFD</code></sub></td>
+<td align="center"><img src="https://img.shields.io/badge/%20%20%20%20%20%20%20%20%20%20-EEF1F6?style=for-the-badge" /><br/><sub><b>Silver White</b><br/><code>#EEF1F6</code></sub></td>
 </tr>
 </table>
 
@@ -56,6 +57,7 @@ The site features immersive scene transitions, parallax photography, scroll-chor
 | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="24" /> | **TypeScript 7** | Full type safety across the entire codebase |
 | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" width="24" /> | **Vite 8** | Lightning-fast HMR and optimised production builds |
 | <img src="https://img.shields.io/badge/GS-88CE02?style=flat-square&logo=greensock&logoColor=black" height="24" /> | **GSAP 3.15** | ScrollTrigger, SplitText, timeline-driven animations |
+| <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg" width="24" /> | **Three.js + React Three Fiber** | Interactive 3D smart flat with live lights, curtains and smart lock |
 | 🎞️ | **Lenis** | Buttery-smooth inertial scroll |
 | 📷 | **Unsplash CDN** | 4K responsive photography (640px → 3840px `srcset`) |
 | 📬 | **Formspree** | Zero-backend contact form with spam filtering |
@@ -108,9 +110,9 @@ isha-home-auto/
 ├── frontend/                    # React application root
 │   ├── public/
 │   │   └── brand/               # Logo assets (PNG, WebP, favicon)
-│   │       ├── isha-logo-512.png
-│   │       ├── isha-logo.png
-│   │       ├── isha-logo-original.webp
+│   │       ├── isha-logo.webp
+│   │       ├── isha-logo-512.webp
+│   │       ├── apple-touch-icon.png
 │   │       └── favicon.png
 │   │
 │   ├── src/

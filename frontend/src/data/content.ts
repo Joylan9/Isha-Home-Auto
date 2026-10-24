@@ -5,6 +5,7 @@ export const regions = ['Kundapura', 'Udupi', 'Manipal', 'Mangaluru'] as const;
 export const navLinks = [
   { href: '#story', label: 'Story' },
   { href: '#experience', label: 'Experience' },
+  { href: '#home-3d', label: '3D Home' },
   { href: '#spaces', label: 'Capabilities' },
   { href: '#collections', label: 'Collections' },
   { href: '#sovir', label: 'Engineering' },

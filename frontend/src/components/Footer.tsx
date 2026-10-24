@@ -24,7 +24,7 @@ export function Footer() {
       <div className="container">
         <div className="footer__top">
           <div className="footer__brand">
-            <img src="/brand/isha-logo-512.png" alt="ISHA logo" width={72} height={66} loading="lazy" />
+            <img src="/brand/isha-logo-512.webp" alt="ISHA logo" width={120} height={120} loading="lazy" />
             <p>
               A home that <em>understands</em> you.
             </p>

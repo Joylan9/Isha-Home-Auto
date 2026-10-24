@@ -33,6 +33,27 @@ export function Hero({ ready }: { ready: boolean }) {
       gsap.to('.hero__media img', { yPercent: 14, scale: 1.12, ease: 'none', scrollTrigger: scroll });
       gsap.to('.hero__content', { yPercent: -30, autoAlpha: 0, ease: 'none', scrollTrigger: { ...scroll, end: '70% top' } });
       gsap.to('.hero__widget', { yPercent: -60, ease: 'none', scrollTrigger: scroll });
+
+      // 3D depth: layers lean toward the pointer at different distances.
+      if (!window.matchMedia('(pointer: fine)').matches) return;
+      const layer = (sel: string, d = 0.7) => ({
+        x: gsap.quickTo(sel, 'x', { duration: d, ease: 'power3.out' }),
+        y: gsap.quickTo(sel, 'y', { duration: d, ease: 'power3.out' }),
+        rx: gsap.quickTo(sel, 'rotationX', { duration: d, ease: 'power3.out' }),
+        ry: gsap.quickTo(sel, 'rotationY', { duration: d, ease: 'power3.out' }),
+      });
+      const media = layer('.hero__media', 1.2);
+      const copy = layer('.hero__content', 0.9);
+      const widget = layer('.hero__widget', 0.8);
+      const onMove = (e: PointerEvent) => {
+        const nx = e.clientX / window.innerWidth - 0.5;
+        const ny = e.clientY / window.innerHeight - 0.5;
+        media.x(nx * -28); media.y(ny * -18); media.ry(nx * 3); media.rx(ny * -2);
+        copy.x(nx * 14); copy.y(ny * 10); copy.ry(nx * 4); copy.rx(ny * -3);
+        widget.x(nx * 36); widget.y(ny * 24); widget.ry(nx * 14 - 8); widget.rx(ny * -10 + 4);
+      };
+      window.addEventListener('pointermove', onMove);
+      return () => window.removeEventListener('pointermove', onMove);
     },
     { scope: root, dependencies: [ready] },
   );
@@ -40,7 +61,7 @@ export function Hero({ ready }: { ready: boolean }) {
   return (
     <section className="hero" id="top" ref={root}>
       <div className="hero__media">
-        <Img photo={photos.heroVilla} priority alt="A sloped-roof coastal villa glowing with warm interior lighting beside a pool at night" />
+        <Img photo={photos.heroFlat} priority alt="A premium apartment living room with warm layered lighting, a sculptural ceiling and floor-to-ceiling glass" />
       </div>
       <div className="hero__veil" />
 
