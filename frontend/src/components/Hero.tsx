@@ -55,11 +55,11 @@ export function Hero({ ready }: { ready: boolean }) {
           Technology you barely notice. Comfort you experience every day.
         </p>
         <div className="hero__actions" data-hero-fade>
-          <a href="#experience" className="btn btn--primary" data-magnetic>
+          <a href="#experience" className="btn btn--primary btn--still">
             <span>Experience ISHA</span>
             <Icon name="arrow" />
           </a>
-          <a href="#collections" className="btn btn--ghost" data-magnetic>
+          <a href="#collections" className="btn btn--ghost btn--still">
             <span>Explore collections</span>
           </a>
         </div>

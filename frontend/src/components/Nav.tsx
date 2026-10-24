@@ -32,10 +32,7 @@ export function Nav() {
     <>
       <header className={`nav${scrolled ? ' is-scrolled' : ''}${hidden && !open ? ' is-hidden' : ''}`}>
         <a href="#top" className="nav__brand" aria-label="ISHA — Intelligent Living, back to top" onClick={close}>
-          <img src="/brand/isha-logo-512.png" alt="" width={40} height={37} />
-          <span className="nav__word">
-            ISHA<small>Intelligent Living</small>
-          </span>
+          <img src="/brand/isha-logo-512.png" alt="" width={52} height={48} />
         </a>
         <nav className="nav__links" aria-label="Primary">
           {navLinks.map((l) => (

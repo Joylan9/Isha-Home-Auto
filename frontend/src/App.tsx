@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Loader } from './components/Loader';
-import { Cursor } from './components/Cursor';
 import { Nav } from './components/Nav';
 import { Hero } from './components/Hero';
 import { Marquee } from './components/Marquee';
@@ -63,7 +62,6 @@ export default function App() {
         Skip to content
       </a>
       <Loader onComplete={handleLoaded} />
-      <Cursor />
       <div className="progress" aria-hidden="true">
         <span ref={progress} />
       </div>
