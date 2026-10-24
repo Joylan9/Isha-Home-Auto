@@ -16,7 +16,7 @@ export function Sovir() {
           Precision you can <em>trust</em>.
         </h2>
         <p className="sovir__text" data-reveal>
-          ISHA is a proposed independent LLP brand, supported by SoVir Technologies LLP for technology development and innovation — bringing proven
+          ISHA is a proposed independent LLP brand, powered by SoVir Technologies LLP for technology development and innovation — bringing proven
           experience in automation and intelligent control systems into the home.
         </p>
         <div className="sovir__pillars" data-reveal>

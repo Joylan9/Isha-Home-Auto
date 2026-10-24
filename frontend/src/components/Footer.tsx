@@ -64,7 +64,7 @@ export function Footer() {
         </div>
         <div className="footer__bottom">
           <p>
-            © {new Date().getFullYear()} ISHA · Intelligent Living. A brand concept supported by SoVir Technologies LLP.
+            © {new Date().getFullYear()} ISHA · Intelligent Living. A brand concept powered by SoVir Technologies LLP.
           </p>
           <a href="#top">Back to top ↑</a>
         </div>
