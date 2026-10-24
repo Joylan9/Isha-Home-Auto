@@ -235,24 +235,28 @@ Each email arrives with subject: **`New ISHA enquiry — <Name> (<City>)`**
 
 ## 🌐 Deployment (Hostinger)
 
-The live site is served by Hostinger from the **`production`** branch. `main` is for ongoing work; merge into `production` when a release is ready.
+**ishaliving.co.in** is deployed automatically: every push to the **`production`** branch runs [`.github/workflows/deploy-hostinger.yml`](.github/workflows/deploy-hostinger.yml), which builds `frontend/` and uploads `frontend/dist/` to Hostinger over FTP.
 
-| Setting | Value |
+**One-time setup** — GitHub repo → Settings → Secrets and variables → Actions:
+
+| Secret | Where to find it (hPanel → Websites → Manage → Files → FTP Accounts) |
 |:---|:---|
-| **Branch** | `production` |
-| **Project folder** | `frontend` |
-| **Install Command** | `npm install` |
-| **Build Command** | `npm run build` |
-| **Output Directory** | `frontend/dist` |
+| `FTP_SERVER` | FTP IP / hostname |
+| `FTP_USERNAME` | FTP username |
+| `FTP_PASSWORD` | FTP password |
+
+Optional variable `FTP_SERVER_DIR` (default `public_html/`) if your FTP root differs.
+
+**Releasing changes:**
 
 ```bash
-# Release: build and upload
 git checkout production
 git merge main
-git push origin production
-cd frontend && npm install && npm run build
-# → upload the contents of frontend/dist/ to public_html on Hostinger
+git push origin production   # → builds and goes live in ~1–2 minutes
+git checkout main
 ```
+
+You can also re-run a deploy from GitHub → Actions → *Deploy to Hostinger* → Run workflow.
 
 <br/>
 
