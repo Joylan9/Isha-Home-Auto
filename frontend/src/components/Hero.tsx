@@ -34,23 +34,51 @@ export function Hero({ ready }: { ready: boolean }) {
       gsap.to('.hero__content', { yPercent: -30, autoAlpha: 0, ease: 'none', scrollTrigger: { ...scroll, end: '70% top' } });
       gsap.to('.hero__widget', { yPercent: -60, ease: 'none', scrollTrigger: scroll });
 
-      // 3D depth: layers lean toward the pointer at different distances.
-      if (!window.matchMedia('(pointer: fine)').matches) return;
-      const layer = (sel: string, d = 0.7) => ({
-        x: gsap.quickTo(sel, 'x', { duration: d, ease: 'power3.out' }),
-        y: gsap.quickTo(sel, 'y', { duration: d, ease: 'power3.out' }),
-        rx: gsap.quickTo(sel, 'rotationX', { duration: d, ease: 'power3.out' }),
-        ry: gsap.quickTo(sel, 'rotationY', { duration: d, ease: 'power3.out' }),
-      });
-      const media = layer('.hero__media', 1.2);
-      const copy = layer('.hero__content', 0.9);
-      const widget = layer('.hero__widget', 0.8);
+      // Look around the flat: the photo is far wider than the screen and
+      // the cursor pans across all of it, with a gentle 3D turn.
+      const hero = root.current!;
+      const pan = hero.querySelector<HTMLElement>('.hero__pan')!;
+      const extra = () => ({ x: Math.max(0, pan.offsetWidth - hero.offsetWidth), y: Math.max(0, pan.offsetHeight - hero.offsetHeight) });
+
+      if (!window.matchMedia('(pointer: fine)').matches) {
+        // Touch screens: drift slowly from one side of the room to the other.
+        gsap.fromTo(pan, { x: () => extra().x * 0.45 }, { x: () => -extra().x * 0.45, duration: 16, ease: 'sine.inOut', repeat: -1, yoyo: true });
+        return;
+      }
+
+      const to = (sel: string | Element, prop: string, d: number) => gsap.quickTo(sel, prop, { duration: d, ease: 'power3.out' });
+      const panX = to(pan, 'x', 1.6);
+      const panY = to(pan, 'y', 1.6);
+      const turnY = to('.hero__media', 'rotationY', 1.6);
+      const turnX = to('.hero__media', 'rotationX', 1.6);
+      const copyX = to('.hero__content', 'x', 0.9);
+      const copyY = to('.hero__content', 'y', 0.9);
+      const widgetX = to('.hero__widget', 'x', 0.8);
+      const widgetY = to('.hero__widget', 'y', 0.8);
+      const widgetRY = to('.hero__widget', 'rotationY', 0.8);
+      const widgetRX = to('.hero__widget', 'rotationX', 0.8);
+      let hinted = false;
+
       const onMove = (e: PointerEvent) => {
-        const nx = e.clientX / window.innerWidth - 0.5;
-        const ny = e.clientY / window.innerHeight - 0.5;
-        media.x(nx * -28); media.y(ny * -18); media.ry(nx * 3); media.rx(ny * -2);
-        copy.x(nx * 14); copy.y(ny * 10); copy.ry(nx * 4); copy.rx(ny * -3);
-        widget.x(nx * 36); widget.y(ny * 24); widget.ry(nx * 14 - 8); widget.rx(ny * -10 + 4);
+        const r = hero.getBoundingClientRect();
+        if (e.clientY > r.bottom) return;
+        const nx = (e.clientX - r.left) / r.width - 0.5;
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        const { x, y } = extra();
+        panX(-nx * x);
+        panY(-ny * y);
+        turnY(nx * 6);
+        turnX(ny * -3);
+        copyX(nx * 16);
+        copyY(ny * 10);
+        widgetX(nx * 40);
+        widgetY(ny * 26);
+        widgetRY(nx * 16 - 8);
+        widgetRX(ny * -10 + 4);
+        if (!hinted) {
+          hinted = true;
+          gsap.to('.hero__hint', { autoAlpha: 0, y: -8, duration: 0.8, delay: 2.5, ease: 'power2.out' });
+        }
       };
       window.addEventListener('pointermove', onMove);
       return () => window.removeEventListener('pointermove', onMove);
@@ -61,7 +89,9 @@ export function Hero({ ready }: { ready: boolean }) {
   return (
     <section className="hero" id="top" ref={root}>
       <div className="hero__media">
-        <Img photo={photos.heroFlat} priority alt="A premium apartment living room with warm layered lighting, a sculptural ceiling and floor-to-ceiling glass" />
+        <div className="hero__pan">
+          <Img photo={photos.heroFlat} priority sizes="160vw" alt="A premium apartment living room with warm layered lighting, a sculptural ceiling and floor-to-ceiling glass" />
+        </div>
       </div>
       <div className="hero__veil" />
 
@@ -113,6 +143,11 @@ export function Hero({ ready }: { ready: boolean }) {
           <b>Closed</b>
         </div>
       </aside>
+
+      <p className="hero__hint" data-hero-fade aria-hidden="true">
+        <span className="hero__hint-icon" />
+        Move your cursor to look around the flat
+      </p>
 
       <div className="hero__scroll" data-hero-fade aria-hidden="true">
         <span>Scroll</span>

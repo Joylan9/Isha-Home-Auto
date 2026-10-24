@@ -600,15 +600,74 @@ button {
 }
 .hero__media {
   position: absolute;
-  inset: -40px;
+  inset: 0;
   z-index: -2;
-  transform-origin: 50% 60%;
+  overflow: hidden;
+  transform-origin: 50% 55%;
 }
-.hero__media img {
+/* Panorama wider and taller than the viewport — the cursor reveals the rest. */
+.hero__pan {
+  position: absolute;
+  top: -12%;
+  left: -30%;
+  width: 160%;
+  height: 124%;
+}
+.hero__pan img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% 55%;
+}
+.hero__hint {
+  position: absolute;
+  top: 7rem;
+  right: var(--pad);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.55rem 1rem 0.55rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(0, 10, 42, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 0.8rem;
+  color: var(--silver-300);
+}
+.hero__hint-icon {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-300);
+}
+.hero__hint-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--gold-300);
+  animation: lookAround 2.6s var(--ease-io) infinite;
+}
+@keyframes lookAround {
+  0%,
+  100% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+@media (pointer: coarse) {
+  .hero__hint {
+    display: none;
+  }
 }
 .hero__veil {
   position: absolute;
