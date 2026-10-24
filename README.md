@@ -20,9 +20,18 @@ npm run build      # typecheck + production build to dist/
 npm run preview    # serve the production build
 ```
 
-## Contact form
+## Contact form → your inbox (Formspree)
 
-Set `VITE_CONTACT_ENDPOINT` (see `.env.example`) to a URL that accepts JSON POSTs — e.g. Formspree, Getform, or your own API. Without it, the form validates and shows a success state but **does not deliver enquiries**.
+Enquiries are delivered by email through [Formspree](https://formspree.io) (free tier: 50 submissions/month).
+
+1. Sign up at formspree.io with the inbox that should receive enquiries.
+2. Create a new form and copy its endpoint, e.g. `https://formspree.io/f/abcdwxyz`.
+3. Paste it into `FORMSPREE_ENDPOINT` in [`src/config.ts`](src/config.ts) and redeploy.
+4. Submit one test enquiry from the live site and confirm the form in the email Formspree sends you.
+
+Each email arrives with the subject `New ISHA enquiry — <Name> (<City>)`, and Reply-To set to the visitor's email (when given), so you can reply directly. A hidden honeypot field plus Formspree's own filtering block spam.
+
+Alternatively, set `VITE_CONTACT_ENDPOINT` at build time (see `.env.example`) to override the endpoint — any service accepting JSON POSTs works. If no endpoint is configured, development builds simulate success (with a console warning) and production builds tell visitors that online enquiries are being set up — they never silently drop an enquiry.
 
 ## Structure
 

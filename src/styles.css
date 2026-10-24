@@ -2043,3 +2043,12 @@ input[type='range']::-moz-range-thumb {
     --line-strong: rgba(196, 204, 214, 0.7);
   }
 }
+
+.form__trap {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

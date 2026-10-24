@@ -3,19 +3,9 @@ import { interests, regions, tiers } from '../data/content';
 import { photos } from '../data/photos';
 import { Img } from './Img';
 import { Icon } from './Icon';
+import { sendEnquiry, type Enquiry, type SendResult } from '../lib/enquiry';
 
-/** Set VITE_CONTACT_ENDPOINT (e.g. a Formspree / API URL) to receive enquiries as JSON POSTs. */
-const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined;
-
-interface FormState {
-  name: string;
-  phone: string;
-  email: string;
-  city: string;
-  collection: string;
-  interests: string[];
-  message: string;
-}
+type FormState = Enquiry;
 
 type Errors = Partial<Record<'name' | 'phone' | 'email' | 'city', string>>;
 type Status = 'idle' | 'sending' | 'sent' | 'error';
@@ -31,11 +21,24 @@ function validate(f: FormState): Errors {
   return e;
 }
 
+function failureMessage(result: Exclude<SendResult, { ok: true }>): string {
+  switch (result.reason) {
+    case 'not-configured':
+      return 'Online enquiries are being set up. Please try again soon.';
+    case 'network':
+      return 'We couldn’t reach our server — please check your connection and try again.';
+    default:
+      return result.message || 'Something went wrong sending your enquiry. Please try again in a moment.';
+  }
+}
+
 export function Contact({ enquiry }: { enquiry: { tier: string; n: number } | null }) {
   const [form, setForm] = useState<FormState>(empty);
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
+  const [failure, setFailure] = useState('');
+  const [honeypot, setHoneypot] = useState('');
 
   useEffect(() => {
     if (enquiry) setForm((f) => ({ ...f, collection: enquiry.tier }));
@@ -60,20 +63,11 @@ export function Contact({ enquiry }: { enquiry: { tier: string; n: number } | nu
       return;
     }
     setStatus('sending');
-    try {
-      if (ENDPOINT) {
-        const res = await fetch(ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(form),
-        });
-        if (!res.ok) throw new Error(String(res.status));
-      } else {
-        await new Promise((r) => setTimeout(r, 900));
-        console.warn('[ISHA] VITE_CONTACT_ENDPOINT is not set — enquiry was not delivered anywhere.', form);
-      }
+    const result = await sendEnquiry(form, honeypot);
+    if (result.ok) {
       setStatus('sent');
-    } catch {
+    } else {
+      setFailure(failureMessage(result));
       setStatus('error');
     }
   };
@@ -121,6 +115,7 @@ export function Contact({ enquiry }: { enquiry: { tier: string; n: number } | nu
                 onClick={() => {
                   setForm(empty);
                   setTouched(false);
+                  setFailure('');
                   setStatus('idle');
                 }}
               >
@@ -129,6 +124,11 @@ export function Contact({ enquiry }: { enquiry: { tier: string; n: number } | nu
             </div>
           ) : (
             <form onSubmit={submit} noValidate>
+              {/* Honeypot: hidden from people, tempting to bots. */}
+              <div className="form__trap" aria-hidden="true">
+                <label htmlFor="f-company">Company</label>
+                <input id="f-company" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+              </div>
               <div className="form__row">
                 <div className={fieldClass('name')}>
                   <input id="f-name" type="text" autoComplete="name" placeholder=" " value={form.name} onChange={set('name')} aria-invalid={!!errors.name} aria-describedby="e-name" />
@@ -189,7 +189,7 @@ export function Contact({ enquiry }: { enquiry: { tier: string; n: number } | nu
               </button>
               {status === 'error' && (
                 <p className="form__error" role="alert">
-                  Something went wrong sending your enquiry. Please try again in a moment.
+                  {failure}
                 </p>
               )}
             </form>
