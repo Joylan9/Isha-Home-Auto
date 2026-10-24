@@ -9,7 +9,7 @@
 
 Premium home-automation brand for Coastal Karnataka, powered by [SoVir Technologies LLP](https://github.com/Joylan9).
 
-[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+[![Hostinger](https://img.shields.io/badge/Hosted%20on-Hostinger-673DE6?style=for-the-badge&logo=hostinger&logoColor=white)](https://www.hostinger.com)
 [![React 19](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
@@ -59,7 +59,7 @@ The site features immersive scene transitions, parallax photography, scroll-chor
 | 🎞️ | **Lenis** | Buttery-smooth inertial scroll |
 | 📷 | **Unsplash CDN** | 4K responsive photography (640px → 3840px `srcset`) |
 | 📬 | **Formspree** | Zero-backend contact form with spam filtering |
-| ▲ | **Vercel** | Edge-deployed with Git-push CI/CD |
+| 🌐 | **Hostinger** | Static hosting from the `production` branch build |
 
 </div>
 
@@ -233,24 +233,25 @@ Each email arrives with subject: **`New ISHA enquiry — <Name> (<City>)`**
 
 ---
 
-## ▲ Deployment (Vercel)
+## 🌐 Deployment (Hostinger)
 
-The project auto-deploys on every push to `main` via Vercel:
+The live site is served by Hostinger from the **`production`** branch. `main` is for ongoing work; merge into `production` when a release is ready.
 
 | Setting | Value |
 |:---|:---|
-| **Root Directory** | `frontend` |
-| **Framework** | Vite |
-| **Build Command** | `npm run build` |
-| **Output Directory** | `dist` |
+| **Branch** | `production` |
+| **Project folder** | `frontend` |
 | **Install Command** | `npm install` |
+| **Build Command** | `npm run build` |
+| **Output Directory** | `frontend/dist` |
 
 ```bash
-# Push to deploy
-git add .
-git commit -m "your changes"
-git push origin main
-# → Vercel auto-deploys in ~60 seconds
+# Release: build and upload
+git checkout production
+git merge main
+git push origin production
+cd frontend && npm install && npm run build
+# → upload the contents of frontend/dist/ to public_html on Hostinger
 ```
 
 <br/>
